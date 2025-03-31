@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF and Video Carousel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            border: 2px solid black;
+            background: #f8f8f8;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-wrapper img,
+        .carousel-wrapper video {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        /* Navigation Buttons */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .prev:hover, .next:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GIF and Video Carousel -->
+    <div class="carousel-container">
+        <button class="prev" onclick="moveSlide(-1)">❮</button>
+        <div class="carousel-wrapper">
+            <img src="./img/ISK_20_animated.gif" alt="GIF 1">
+            <img src="./img/ISK_24_animated.gif" alt="GIF 2">
+            <img src="./img/ISK_22_animated.gif" alt="GIF 3">
+            <video autoplay loop muted>
+                <source src="./videos/sample.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <img src="./img/ISK_25_animated.gif" alt="GIF 5">
+        </div>
+        <button class="next" onclick="moveSlide(1)">❯</button>
+    </div>
+
+    <script>
+        let index = 0;
+
+        function moveSlide(direction) {
+            const carousel = document.querySelector('.carousel-wrapper');
+            const items = document.querySelectorAll('.carousel-wrapper img, .carousel-wrapper video');
+            const totalItems = items.length;
+
+            index += direction;
+
+            if (index < 0) {
+                index = totalItems - 1;
+            } else if (index >= totalItems) {
+                index = 0;
+            }
+
+            const offset = -index * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+        }
+
+        // Auto-play carousel every 3 seconds
+        setInterval(() => moveSlide(1), 3000);
+    </script>
+
+</body>
+</html>
